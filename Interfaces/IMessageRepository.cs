@@ -4,9 +4,9 @@ namespace StudyTracker_Level1.Interfaces;
 
 public interface IMessageRepository
 {
-    Task<ApiResponse<MessageModel>> AddMessage(MessageModel message);
-    Task<ApiResponse<MessageModel>> GetMessageByCategory(Category category);
-    Task<ApiResponse<List<MessageModel>>> GetAllMessages();
-    Task<ApiResponse<MessageModel>> UpdateMessageCategory(int msgId, Category newCategory);
-    Task<ApiResponse<MessageModel>> DeleteMessage(int msgId);
+    ApiResponse<MessageModel> AddMessage(MessageModel message);
+    ApiResponse<List<MessageModel>> GetMessagesByCategory(Category category);
+    ApiResponse<List<MessageModel>> GetAllMessages();
+    ApiResponse<MessageModel> UpdateMessageCategory(int msgId, Category newCategory);
+    ApiResponse<MessageModel> DeleteMessage(int msgId);
 }
