@@ -6,84 +6,56 @@ namespace StudyTracker_Level1.Repositories;
 
 public class MessageRepository : IMessageRepository
 {
-    public ApiResponse<MessageModel> AddMessage(MessageModel message)
+    public MessageModel? AddMessage(MessageModel message)
     {
         var messageWithTheSameText = InMemoryDatabase.Messages.FirstOrDefault(m => m.Message == message.Message);
         if (messageWithTheSameText != null)
         {
-            return new ApiResponse<MessageModel>
-            {
-                ErrorMessage = "This message already exists in database.",
-                StatusCode = 409
-            };
+            // add logging here
+            return null;
         }
         
         InMemoryDatabase.Messages.Add(message);
-        
-        return new ApiResponse<MessageModel>
-        {
-            Result = InMemoryDatabase.Messages.LastOrDefault(),
-            StatusCode = 201
-        };
+
+        return InMemoryDatabase.Messages.LastOrDefault();
     }
 
-    public ApiResponse<List<MessageModel>> GetMessagesByCategory(Category category)
-    {
-        return new ApiResponse<List<MessageModel>>
-        {
-            Result = InMemoryDatabase.Messages.Where(m => m.Category == category).ToList(),
-            StatusCode = 200
-        };
-    }
+    public List<MessageModel> GetMessagesByCategory(Category category) =>
+        InMemoryDatabase.Messages.Where(m => m.Category == category).ToList();
 
-    public ApiResponse<List<MessageModel>> GetAllMessages()
-    {
-        return new ApiResponse<List<MessageModel>>
-        {
-            Result = InMemoryDatabase.Messages,
-            StatusCode = 200
-        };
-    }
+    public List<MessageModel> GetAllMessages() => 
+        InMemoryDatabase.Messages;
+    
+    public MessageModel? GetLastMessage() =>
+        InMemoryDatabase.Messages.LastOrDefault();
 
-    public ApiResponse<MessageModel> UpdateMessageCategory(int msgId, Category newCategory)
+    public int GetAllMessagesCount() => 
+        InMemoryDatabase.Messages.Count;
+    
+
+    public MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory)
     {
         var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
         if (message == null)
         {
-            return new ApiResponse<MessageModel>
-            {
-                ErrorMessage = $"Message with ID {msgId} not found.",
-                StatusCode = 404
-            };
+            return null;
         }
         
         message.Category = newCategory;
-        
-        return new ApiResponse<MessageModel>
-        {
-            Result = message,
-            StatusCode = 200
-        };
+
+        return message;
     }
 
-    public ApiResponse<MessageModel> DeleteMessage(int msgId)
+    public MessageModel? DeleteMessage(Guid msgId)
     {
         var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
         if (message == null)
         {
-            return new ApiResponse<MessageModel>
-            {
-                ErrorMessage = $"Message with ID {msgId} not found.",
-                StatusCode = 404
-            };
+            return null;
         }
 
         InMemoryDatabase.Messages.RemoveAll(m => m.Id == msgId);
-        
-        return new ApiResponse<MessageModel>
-        {
-            Result = message,
-            StatusCode = 200
-        };
+
+        return message;
     }
 }
