@@ -8,6 +8,6 @@ public interface IMessageService
 {
     ApiResponse<MessageModel?> AddMessage(MessageDto messageDto);
     ApiResponse<MessageDto?> GenerateRandomMessageByCategory(Category category);
-    // ApiResponse<MessageDto?> UpdateMessageCategory(Guid msgId, Category newCategory);
+    ApiResponse<MessageDto?> UpdateMessageCategory(Guid msgId, Category newCategory);
     // ApiResponse<MessageDto?> DeleteMessage(Guid msgId);
 }

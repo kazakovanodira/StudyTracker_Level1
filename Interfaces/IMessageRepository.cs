@@ -10,6 +10,6 @@ public interface IMessageRepository
     List<MessageModel> GetAllMessages();
     public MessageModel? GetLastMessage();
     int GetAllMessagesCount();
-    // MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory);
+    MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory);
     // MessageModel? DeleteMessage(Guid msgId);
 }

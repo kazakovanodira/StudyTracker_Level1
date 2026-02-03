@@ -60,18 +60,21 @@ public class MessageController : ControllerBase
         return Ok(response);
     }
     
-    // [HttpPost("{messageId:guid}/update")]
-    // public IActionResult UpdateMessageCategory(Guid messageId, Category newCategory)
-    // {
-    //     var response = _messageService.UpdateMessageCategory(messageId, newCategory);
-    //     if (response.IsSuccess)
-    //     {
-    //         return Ok(response.Result);
-    //     }
-    //
-    //     return StatusCode(response.StatusCode, response.ErrorMessage);
-    // }
-    //
+    [HttpPost("{messageId:guid}/update")]
+    public IActionResult UpdateMessageCategory(Guid messageId, string newCategory)
+    {
+        if (Enum.TryParse(newCategory, out Category category))
+        {
+            var response = _messageService.UpdateMessageCategory(messageId, category);
+            if (response.IsSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return StatusCode(response.StatusCode, response.ErrorMessage);
+        }
+        return BadRequest("Invalid category.");
+    }
+    
     // [HttpDelete("{messageId:guid}/delete")]
     // public IActionResult DeleteMessage(Guid messageId)
     // {

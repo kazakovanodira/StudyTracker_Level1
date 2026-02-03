@@ -33,19 +33,19 @@ public class MessageRepository : IMessageRepository
     public int GetAllMessagesCount() => 
         InMemoryDatabase.Messages.Count;
     
-    // public MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory)
-    // {
-    //     var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
-    //     if (message == null)
-    //     {
-    //         return null;
-    //     }
-    //     
-    //     message.Category = newCategory;
-    //
-    //     return message;
-    // }
-    //
+    public MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory)
+    {
+        var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
+        if (message == null)
+        {
+            return null;
+        }
+        
+        message.Category = (int)newCategory;
+    
+        return message;
+    }
+    
     // public MessageModel? DeleteMessage(Guid msgId)
     // {
     //     var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
