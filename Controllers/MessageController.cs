@@ -32,33 +32,34 @@ public class MessageController : ControllerBase
             {
                 return Ok(response.Result);
             }
-
             return StatusCode(response.StatusCode, response.ErrorMessage);
         }
-
         return BadRequest("Invalid category.");
     }
     
-    // [HttpGet("random/{category}")]
-    // public IActionResult GetMessage(Category category)
-    // {
-    //     var response = _messageService.GenerateRandomMessageByCategory(category);
-    //     if (response.IsSuccess)
-    //     {
-    //         return Ok(response.Result);
-    //     }
-    //
-    //     return StatusCode(response.StatusCode, response.ErrorMessage);
-    // }
-    //
-    // [HttpGet("all")]
-    // public IActionResult GetAllMessages()
-    // {
-    //     var response = _messageRepository.GetAllMessages();
-    //
-    //     return Ok(response);
-    // }
-    //
+    [HttpGet("random")]
+    public IActionResult GetMessage(string categoryRequest)
+    {
+        if (Enum.TryParse(categoryRequest, out Category category))
+        {
+            var response = _messageService.GenerateRandomMessageByCategory(category);
+            if (response.IsSuccess)
+            {
+                return Ok(response.Result);
+            }
+            return StatusCode(response.StatusCode, response.ErrorMessage);
+        }
+        return BadRequest("Invalid category.");
+    }
+    
+    [HttpGet("all")]
+    public IActionResult GetAllMessages()
+    {
+        var response = _messageRepository.GetAllMessages();
+    
+        return Ok(response);
+    }
+    
     // [HttpPost("{messageId:guid}/update")]
     // public IActionResult UpdateMessageCategory(Guid messageId, Category newCategory)
     // {

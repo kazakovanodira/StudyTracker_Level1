@@ -43,32 +43,32 @@ public class MessageService : IMessageService
         };
     }
 
-    // public ApiResponse<MessageDto?> GenerateRandomMessageByCategory(Category category)
-    // {
-    //     var messagesInCategory = _messageRepository.GetMessagesByCategory(category);
-    //     if (messagesInCategory.Count == 0)
-    //     {
-    //         return new ApiResponse<MessageDto?>()
-    //         {
-    //             ErrorMessage = "No messages found in this category.",
-    //             StatusCode = 200
-    //         };
-    //     }
-    //
-    //     var randomMessageIndex = new Random().Next(messagesInCategory.Count);
-    //     var randomMessageDto = new MessageDto()
-    //     {
-    //         Message = messagesInCategory[randomMessageIndex].Message,
-    //         Category = category
-    //     };
-    //
-    //     return new ApiResponse<MessageDto?>
-    //     {
-    //         Result = randomMessageDto,
-    //         StatusCode = 200
-    //     };
-    // }
-    //
+    public ApiResponse<MessageDto?> GenerateRandomMessageByCategory(Category category)
+    {
+        var messagesInCategory = _messageRepository.GetMessagesByCategory(category);
+        if (messagesInCategory.Count == 0)
+        {
+            return new ApiResponse<MessageDto?>()
+            {
+                ErrorMessage = "No messages found in this category.",
+                StatusCode = 200
+            };
+        }
+    
+        var randomMessageIndex = new Random().Next(messagesInCategory.Count);
+        var randomMessageDto = new MessageDto()
+        {
+            Message = messagesInCategory[randomMessageIndex].Message,
+            Category = category.ToString()
+        };
+    
+        return new ApiResponse<MessageDto?>
+        {
+            Result = randomMessageDto,
+            StatusCode = 200
+        };
+    }
+    
     // public ApiResponse<MessageDto?> UpdateMessageCategory(Guid msgId, Category newCategory)
     // {
     //     var updatedMessage = _messageRepository.UpdateMessageCategory(msgId, newCategory);
@@ -90,8 +90,8 @@ public class MessageService : IMessageService
     //         },
     //         StatusCode = 200
     //     };
-    // }
-    //
+    }
+    
     // public ApiResponse<MessageDto?> DeleteMessage(Guid msgId)
     // {
     //     var messageToDelete = _messageRepository.DeleteMessage(msgId);
@@ -114,4 +114,3 @@ public class MessageService : IMessageService
     //         StatusCode = 200
     //     };
     // }
-}

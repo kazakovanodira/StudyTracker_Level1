@@ -1,4 +1,5 @@
 using StudyTracker_Level1.Database;
+using StudyTracker_Level1.Enums;
 using StudyTracker_Level1.Interfaces;
 using StudyTracker_Level1.Models;
 
@@ -20,19 +21,18 @@ public class MessageRepository : IMessageRepository
         return InMemoryDatabase.Messages.LastOrDefault();
     }
 
-    // public List<MessageModel> GetMessagesByCategory(Category category) =>
-    //     InMemoryDatabase.Messages.Where(m => m.Category == category).ToList();
-    //
-    // public List<MessageModel> GetAllMessages() => 
-    //     InMemoryDatabase.Messages;
-    //
+    public List<MessageModel> GetMessagesByCategory(Category category) =>
+        InMemoryDatabase.Messages.Where(m => m.Category == (int)category).ToList();
+    
+    public List<MessageModel> GetAllMessages() => 
+        InMemoryDatabase.Messages;
+    
     public MessageModel? GetLastMessage() =>
         InMemoryDatabase.Messages.LastOrDefault();
     
     public int GetAllMessagesCount() => 
         InMemoryDatabase.Messages.Count;
-    //
-    //
+    
     // public MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory)
     // {
     //     var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
