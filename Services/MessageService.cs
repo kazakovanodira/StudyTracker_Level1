@@ -42,6 +42,48 @@ public class MessageService : IMessageService
             StatusCode = 201
         };
     }
+    
+    public ApiResponse<List<MessageModel>> AddNewMessagesInBulk(List<MessageDto> bulkMessageDtoList)
+    {
+        var messageModels = new List<MessageModel>();
+        int idCount = _messageRepository.GetAllMessagesCount();
+        var iteration = 0;
+        
+        foreach (var messageDto in bulkMessageDtoList)
+        {
+            messageModels.Add(new MessageModel
+            {
+                Category = (int)Enum.Parse<Category>(messageDto.Category),
+                InternalId = idCount + iteration,
+                Id = Guid.NewGuid(),
+                Message = messageDto.Message
+            });
+            iteration++;
+        }
+
+        var existingMessages = _messageRepository.GetAllMessages();
+        var repeatedTexts = 
+            messageModels.IntersectBy(existingMessages.Select(m => m.Message), m => m.Message).ToList();
+
+        if (repeatedTexts.Any())
+        {
+            return new ApiResponse<List<MessageModel>>
+            {
+                Result = repeatedTexts,
+                ErrorMessage = "Some messages are repeated.",
+                StatusCode = 400
+            };
+        }
+        
+        _messageRepository.AddMessagesInBulk(messageModels);
+        
+        return new ApiResponse<List<MessageModel>>
+        {
+            Result = messageModels,
+            StatusCode = 200
+        };
+    }
+
 
     public ApiResponse<MessageDto?> GenerateRandomMessageByCategory(Category category)
     {

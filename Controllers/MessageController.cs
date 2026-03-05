@@ -37,6 +37,30 @@ public class MessageController : ControllerBase
         return BadRequest("Invalid category.");
     }
     
+    [HttpPost("bulk-add-messages")]
+    public IActionResult AddNewMessagesInBulk(List<MessageDto> bulkMessageDtoList)
+    {
+        var successfullyParsedMessages = new List<MessageDto>();
+        foreach (var messageDto in bulkMessageDtoList)
+        {
+            if (Enum.TryParse(messageDto.Category, out Category category))
+            {
+                successfullyParsedMessages.Add(messageDto);
+            }
+            else
+            { 
+                return BadRequest($"Invalid category for message={messageDto.Message}, category={messageDto.Category}");
+            }
+        }
+
+        var response = _messageService.AddNewMessagesInBulk(successfullyParsedMessages);
+        if (response.IsSuccess)
+        {
+            return Ok(response.Result);
+        }
+        return StatusCode(response.StatusCode, response.ErrorMessage);
+    }
+    
     [HttpGet("random")]
     public IActionResult GetMessage(string categoryRequest)
     {

@@ -20,6 +20,11 @@ public class MessageRepository : IMessageRepository
 
         return InMemoryDatabase.Messages.LastOrDefault();
     }
+    
+    public void AddMessagesInBulk(List<MessageModel> bulkMessages)
+    {
+        InMemoryDatabase.Messages.AddRange(bulkMessages);
+    }
 
     public List<MessageModel> GetMessagesByCategory(Category category) =>
         InMemoryDatabase.Messages.Where(m => m.Category == (int)category).ToList();

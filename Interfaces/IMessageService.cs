@@ -7,6 +7,7 @@ namespace StudyTracker_Level1.Interfaces;
 public interface IMessageService
 {
     ApiResponse<MessageModel?> AddMessage(MessageDto messageDto);
+    ApiResponse<List<MessageModel>> AddNewMessagesInBulk(List<MessageDto> bulkMessageDtoList);
     ApiResponse<MessageDto?> GenerateRandomMessageByCategory(Category category);
     ApiResponse<MessageDto?> UpdateMessageCategory(Guid msgId, Category newCategory);
     ApiResponse<MessageDto?> DeleteMessage(Guid msgId);
