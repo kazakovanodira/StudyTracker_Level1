@@ -92,26 +92,26 @@ public class MessageService : IMessageService
         };
     }
 
-// public ApiResponse<MessageDto?> DeleteMessage(Guid msgId)
-    // {
-    //     var messageToDelete = _messageRepository.DeleteMessage(msgId);
-    //     if (messageToDelete == null)
-    //     {
-    //         return new ApiResponse<MessageDto?>()
-    //         {
-    //             ErrorMessage = "Message with that ID is not found.",
-    //             StatusCode = 400
-    //         };
-    //     }
-    //
-    //     return new ApiResponse<MessageDto?>()
-    //     {
-    //         Result = new MessageDto()
-    //         {
-    //             Message = messageToDelete.Message,
-    //             Category = messageToDelete.Category
-    //         },
-    //         StatusCode = 200
-    //     };
-    // }
+public ApiResponse<MessageDto?> DeleteMessage(Guid msgId)
+    {
+        var messageToDelete = _messageRepository.DeleteMessage(msgId);
+        if (messageToDelete == null)
+        {
+            return new ApiResponse<MessageDto?>()
+            {
+                ErrorMessage = "Message with that ID is not found.",
+                StatusCode = 400
+            };
+        }
+    
+        return new ApiResponse<MessageDto?>()
+        {
+            Result = new MessageDto()
+            {
+                Message = messageToDelete.Message,
+                Category = Enum.GetName(typeof(Category), messageToDelete.Category)!
+            },
+            StatusCode = 200
+        };
+    }
 }

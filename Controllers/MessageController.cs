@@ -75,15 +75,15 @@ public class MessageController : ControllerBase
         return BadRequest("Invalid category.");
     }
     
-    // [HttpDelete("{messageId:guid}/delete")]
-    // public IActionResult DeleteMessage(Guid messageId)
-    // {
-    //     var response = _messageService.DeleteMessage(messageId);
-    //     if (response.IsSuccess)
-    //     {
-    //         return Ok(response.Result);
-    //     }
-    //
-    //     return StatusCode(response.StatusCode, response.ErrorMessage);
-    // }
+    [HttpDelete("{messageId:guid}/delete")]
+    public IActionResult DeleteMessage(Guid messageId)
+    {
+        var response = _messageService.DeleteMessage(messageId);
+        if (response.IsSuccess)
+        {
+            return Ok(response.Result);
+        }
+    
+        return StatusCode(response.StatusCode, response.ErrorMessage);
+    }
 }

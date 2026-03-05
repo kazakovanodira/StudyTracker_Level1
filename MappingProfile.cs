@@ -10,5 +10,6 @@ public class MappingProfile : Profile
     {
         CreateMap<MessageModel, MessageDto>();
         CreateMap<StudyLogModel, StudyLogDto>();
+        //CreateMap<List<MessageModel>, List<MessageDto>>();
     }
 }

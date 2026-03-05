@@ -46,16 +46,16 @@ public class MessageRepository : IMessageRepository
         return message;
     }
     
-    // public MessageModel? DeleteMessage(Guid msgId)
-    // {
-    //     var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
-    //     if (message == null)
-    //     {
-    //         return null;
-    //     }
-    //
-    //     InMemoryDatabase.Messages.RemoveAll(m => m.Id == msgId);
-    //
-    //     return message;
-    // }
+    public MessageModel? DeleteMessage(Guid msgId)
+    {
+        var message = InMemoryDatabase.Messages.FirstOrDefault(m => m.Id == msgId);
+        if (message == null)
+        {
+            return null;
+        }
+    
+        InMemoryDatabase.Messages.RemoveAll(m => m.Id == msgId);
+    
+        return message;
+    }
 }
