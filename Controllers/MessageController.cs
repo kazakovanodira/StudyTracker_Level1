@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using StudyTracker_Level1.Interfaces;
-using StudyTracker_Level1.Models;
 using StudyTracker_Level1.Models.DTOs;
 using StudyTracker_Level1.Enums;
 

@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Message API Tester";
+}
+
+<h2>Message API Interface</h2>
+
+<hr />
+
+<h3>Add New Message</h3>
+<p>Enter a message and category, then click submit.</p>
+
+<input id="messageText" placeholder="Message text" />
+<input id="messageCategory" placeholder="Category (Motivation, Study, etc)" />
+<button onclick="addMessage()">Add Message</button>
+
+<hr />
+
+<h3>Add Bulk Messages</h3>
+<p>Enter JSON array of messages.</p>
+
+<textarea id="bulkMessages" rows="5" cols="60">
+[
+  { "message": "Study hard", "category": "Motivation" },
+  { "message": "Take a break", "category": "Reminder" }
+]
+</textarea>
+
+<br />
+<button onclick="bulkAdd()">Add Bulk Messages</button>
+
+<hr />
+
+<h3>Get Random Message</h3>
+<input id="randomCategory" placeholder="Category" />
+<button onclick="getRandom()">Get Random Message</button>
+
+<hr />
+
+<h3>Get All Messages</h3>
+<button onclick="getAll()">Load All Messages</button>
+
+<hr />
+
+<h3>Update Message Category</h3>
+
+<input id="updateId" placeholder="Message ID (GUID)" />
+<input id="newCategory" placeholder="New Category" />
+<button onclick="updateCategory()">Update Category</button>
+
+<hr />
+
+<h3>Delete Message</h3>
+
+<input id="deleteId" placeholder="Message ID (GUID)" />
+<button onclick="deleteMessage()">Delete Message</button>
+
+<hr />
+
+<h3>Response</h3>
+
+<pre id="responseBox"></pre>
+
+<script>
+
+const baseUrl = "/api/message";
+
+function showResponse(data) {
+    document.getElementById("responseBox").innerText =
+        JSON.stringify(data, null, 2);
+}
+
+async function addMessage() {
+
+    const message = document.getElementById("messageText").value;
+    const category = document.getElementById("messageCategory").value;
+
+    const response = await fetch(baseUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            message: message,
+            category: category
+        })
+    });
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+async function bulkAdd() {
+
+    const json = document.getElementById("bulkMessages").value;
+
+    const response = await fetch(baseUrl + "/bulk-add-messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: json
+    });
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+async function getRandom() {
+
+    const category = document.getElementById("randomCategory").value;
+
+    const response = await fetch(baseUrl + "/random?categoryRequest=" + category);
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+async function getAll() {
+
+    const response = await fetch(baseUrl + "/all");
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+async function updateCategory() {
+
+    const id = document.getElementById("updateId").value;
+    const category = document.getElementById("newCategory").value;
+
+    const response = await fetch(baseUrl + "/" + id + "/update?newCategory=" + category, {
+        method: "POST"
+    });
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+async function deleteMessage() {
+
+    const id = document.getElementById("deleteId").value;
+
+    const response = await fetch(baseUrl + "/" + id + "/delete", {
+        method: "DELETE"
+    });
+
+    const data = await response.json();
+    showResponse(data);
+}
+
+</script>
