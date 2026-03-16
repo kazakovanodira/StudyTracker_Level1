@@ -9,7 +9,7 @@ public interface IMessageRepository
     void AddMessagesInBulk(List<MessageModel> bulkMessages);
     List<MessageModel> GetMessagesByCategory(Category category);
     List<MessageModel> GetAllMessages();
-    public MessageModel? GetLastMessage();
+    MessageModel? GetLastMessage();
     int GetAllMessagesCount();
     MessageModel? UpdateMessageCategory(Guid msgId, Category newCategory);
     MessageModel? DeleteMessage(Guid msgId);

@@ -4,8 +4,11 @@ namespace StudyTracker_Level1.Interfaces;
 
 public interface IStudyLogRepository
 {
-    Task<ApiResponse<StudyLogModel>> AddStudyLog(StudyLogModel logModel);
-    Task<ApiResponse<List<StudyLogModel>>> GetStudyLogsByDate(DateTime logDate);
-    Task<ApiResponse<List<StudyLogModel>>> GetAllStudyLogs();
-    Task<ApiResponse<StudyLogModel>> DeleteStudyLog(Guid logId);
+    StudyLogModel? AddStudyLog(StudyLogModel logModel);
+    void AddStudyLogsInBulk(List<StudyLogModel> bulkSLs);
+    List<StudyLogModel> GetStudyLogsByDate(DateTime logDate);
+    List<StudyLogModel> GetAllStudyLogs();
+    int GetAllStudyLogCount();
+    StudyLogModel? GetLastStudyLog();
+    StudyLogModel DeleteStudyLog(Guid logId);
 }

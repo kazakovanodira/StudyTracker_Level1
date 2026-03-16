@@ -11,6 +11,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddScoped<IStudyLogRepository, StudyLogRepository>();
+builder.Services.AddScoped<IStudyLogService, StudyLogService>();
 
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();

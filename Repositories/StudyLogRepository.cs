@@ -1,3 +1,4 @@
+using StudyTracker_Level1.Database;
 using StudyTracker_Level1.Interfaces;
 using StudyTracker_Level1.Models;
 
@@ -5,22 +6,43 @@ namespace StudyTracker_Level1.Repositories;
 
 public class StudyLogRepository : IStudyLogRepository
 {
-    public Task<ApiResponse<StudyLogModel>> AddStudyLog(StudyLogModel logModel)
+    public StudyLogModel? AddStudyLog(StudyLogModel logModel)
+    {
+        var slWithTheSameStartTime = InMemoryDatabase.Logs.FirstOrDefault(sl => sl.StartTime == logModel.StartTime);
+        if (slWithTheSameStartTime != null)
+        {
+            // add logging here
+            return null;
+        }
+        
+        InMemoryDatabase.Logs.Add(logModel);
+
+        return InMemoryDatabase.Logs.LastOrDefault();
+    }
+
+    public void AddStudyLogsInBulk(List<StudyLogModel> bulkSLs)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ApiResponse<List<StudyLogModel>>> GetStudyLogsByDate(DateTime logDate)
+    public List<StudyLogModel> GetStudyLogsByDate(DateTime logDate)
     {
         throw new NotImplementedException();
     }
 
-    public Task<ApiResponse<List<StudyLogModel>>> GetAllStudyLogs()
+    public List<StudyLogModel> GetAllStudyLogs()
     {
         throw new NotImplementedException();
     }
 
-    public Task<ApiResponse<StudyLogModel>> DeleteStudyLog(Guid logId)
+    public int GetAllStudyLogCount() => 
+        InMemoryDatabase.Logs.Count;
+
+    public StudyLogModel? GetLastStudyLog() => 
+        InMemoryDatabase.Logs.LastOrDefault();
+    
+
+    public StudyLogModel DeleteStudyLog(Guid logId)
     {
         throw new NotImplementedException();
     }
